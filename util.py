@@ -13,3 +13,12 @@ def get_path():
     path = os.getcwd()
     return path
 
+
+def load_setting_from_obj(obj: object):
+    """
+    读取对象中所有自定义的属性，保存在一个字典中并返回
+    :param obj:对象
+    :return: attrs,保存了对象所有自定义属性的字典
+    """
+    attrs = {key: values for key, values in obj.__dict__.items() if not key.startswith('__')}
+    return attrs
