@@ -88,7 +88,9 @@ class SendEmail(object):
         email_file["Content-Type"] = 'application/octet-stream'
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
         file_name = os.path.basename(file_path)
-        email_file["Content-Disposition"] = f'attachment; filename="{file_name}"'
+        # 下面这种写法，如果附件名是中文，会出现乱码问题，修改成如下写法
+        # email_file["Content-Disposition"] = f'attachment; filename="{file_name}"'
+        email_file.add_header("Content-Disposition", "attachment", filename=file_name)
         self._email_obj.attach(email_file)
 
     def send_email(self):
